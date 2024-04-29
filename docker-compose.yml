@@ -17,7 +17,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: demoauthapp
+      MYSQL_DATABASE: nextauthv5demo
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     volumes:
