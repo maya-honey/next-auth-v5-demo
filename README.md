@@ -1,3 +1,13 @@
+# Next Auth v5 demo
+```
+docker-compose up -d
+docker-compose exec app bash
+
+## mysql
+mysql -h 127.0.0.1 -P 3306 -u root -p
+```
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
