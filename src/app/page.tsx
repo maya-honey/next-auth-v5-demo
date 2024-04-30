@@ -6,7 +6,7 @@ import { User } from "@prisma/client";
 export default async function Home() {
   const users = await request.get(endpoint.appApi + 'user/all')
 
-  const session = auth()
+  const session = await auth()
   return (
     <>
     <div>

@@ -9,8 +9,9 @@ const prisma = new PrismaClient()
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     session: {
+        //https://authjs.dev/concepts/session-strategies#database
         strategy: 'jwt',
-        
+
     },
     adapter: PrismaAdapter(prisma),
     providers: [
@@ -48,7 +49,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             // ここで返されるものはすべて JWT に保存され、セッション・コールバックに転送されます。
             // そこで、クライアントに返すべきものを制御できます。
             // それ以外のものは、フロントエンドから保持されます。JWTはデフォルトでAUTH_SECRET環境変数によって暗号化されます。
-            console.log('jwtここまでどう2', token)
             return token
         },
         session({ session, token, user, trigger, newSession }) {
@@ -56,26 +56,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             //（useSessionやgetSessionを使用して/api/sessionエンドポイントを呼び出した場合など）
             //戻り値はクライアントに公開されるので、ここで返す値には注意してください！
             //JWTコールバックを通してトークンに追加したものをクライアントが利用できるようにしたい場合は、ここでも明示的に返す必要があります。
-            console.log('sessionここまでどう1', {
-                'session': session,
-                'token': token,
-                'user': user,
-                'trigger': trigger,
-                'newSession': newSession
-            })
             return session
         },
         signIn({ user, account, profile, email, credentials }) {
             // コールバックを使用して、signIn()ユーザーにサインインを許可するかどうかを制御します。
             // 許可する場合はtrueを返す
             // デフォルトのエラーメッセージを表示するにはfalseを、あるいはリダイレクト先を指定することもできる
-            console.log('これsignIn', {
-                'user': user,
-                'account': account,
-                'profile': profile,
-                'email': email,
-                'credentials': credentials
-            })
             return true
         }
     },

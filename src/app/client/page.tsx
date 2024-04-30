@@ -5,10 +5,12 @@ function ClientComponent() {
     const { data, status } = useSession()
     
     return (
-        <div>
+        <>
             <p>セッション情報｜クライアントでセッション情報取得（useSession）</p>
-            {JSON.stringify(data, null, 2)}
-        </div>
+            <div className="py-6 px-4 whitespace-pre-wrap break-all">
+                {JSON.stringify(data, null, 2)}
+            </div>
+        </>
     )
 }
 
