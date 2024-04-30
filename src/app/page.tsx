@@ -85,17 +85,5 @@ const PathList = [
   {
     path: "/admin/signup",
     text: ''
-  },
-  {
-    path: "/admin/level1",
-    text: '管理者ユーザーのみ'
-  },
-  {
-    path: "/admin/level2",
-    text: '管理者ユーザーのみ（Level2）'
-  },
-  {
-    path: "/admin/level3",
-    text: '管理者ユーザーのみ（Level3）'
   }
 ]

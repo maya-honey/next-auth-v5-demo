@@ -56,7 +56,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
                     const isCorrectPassword = await bcrypt.compare(credentials.password, user.password)
                     if (! isCorrectPassword) return null
-                    console.log('authorizeで取得したuser', user)
                     return user
                 } catch(err) {
                     throw new Error('ログイン失敗')
@@ -77,10 +76,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             // ここで返されるものはすべて JWT に保存され、セッション・コールバックに転送されます。
             // そこで、クライアントに返すべきものを制御できます。
             // それ以外のものは、フロントエンドから保持されます。JWTはデフォルトでAUTH_SECRET環境変数によって暗号化されます。
-            if (user?.role) {
-                token.role = user.role
-                console.log('jwt：更新後のtoken', token)
-            }
+            if (user?.role) token.role = user.role
 
             return token
         },
@@ -89,10 +85,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             //（useSessionやgetSessionを使用して/api/sessionエンドポイントを呼び出した場合など）
             //戻り値はクライアントに公開されるので、ここで返す値には注意してください！
             //JWTコールバックを通してトークンに追加したものをクライアントが利用できるようにしたい場合は、ここでも明示的に返す必要があります。
-            if (token?.role) {
-                session.user.role = token.role
-                console.log('session：更新後のsession', session)
-            }
+            if (token?.role) session.user.role = token.role
 
             return session
         },
@@ -100,13 +93,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             // コールバックを使用して、signIn()ユーザーにサインインを許可するかどうかを制御します。
             // 許可する場合はtrueを返す
             // デフォルトのエラーメッセージを表示するにはfalseを、あるいはリダイレクト先を指定することもできる
-            console.log('signInきたこれ', {
-                'user': user,
-                'account': account,
-                'profile': profile,
-                'email': email,
-                'credentials': credentials,
-            })
             if (account?.provider === "credentials") return true
             return true
             /*if (! user.email) return false
