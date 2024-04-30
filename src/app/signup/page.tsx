@@ -125,7 +125,7 @@ export default function Signup() {
                         </div>
                         <div className="mt-6">
                             <Button
-                                onClick={async() => {await signIn('nodemailer', {
+                                onClick={async() => {await signIn('resend', {
                                 email: input.email,
                                 name: input.name,
                                 pass: input.password

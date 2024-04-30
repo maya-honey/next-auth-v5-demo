@@ -1,4 +1,4 @@
-import { PrismaClient, User } from "@prisma/client"
+import { PrismaClient, User, VerificationToken } from "@prisma/client"
 
 const prisma = new PrismaClient()
 
@@ -24,6 +24,15 @@ export async function createUser(name:string, email:string, password:string): Pr
             name: name,
             email: email,
             password: password
+        }
+    })
+}
+
+export async function fetchVerificationTokeByEmail(email: string): Promise<VerificationToken | null>
+{
+    return await prisma.verificationToken.findFirst({
+        where: {
+            identifier: email,
         }
     })
 }

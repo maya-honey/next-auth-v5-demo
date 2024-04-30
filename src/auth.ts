@@ -3,8 +3,8 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import { PrismaClient } from "@prisma/client"
 import credentials from "next-auth/providers/credentials"
 import { fetchUserByEmail } from "./lib/data"
-import bcrypt from 'bcrypt'
-import nodemailer from "next-auth/providers/nodemailer"
+import bcrypt from 'bcryptjs'
+import Resend from "next-auth/providers/resend"
 
 const prisma = new PrismaClient()
 
@@ -41,9 +41,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 }
             },
         }),
-        nodemailer({
-            server: process.env.EMAIL_SERVER,
-            from: process.env.EMAIL_FROM,
+        Resend({
+            apiKey: process.env.RESEND_API_KEY,
+            from: process.env.RESEND_FROM
         })
     ],
     callbacks: {
@@ -63,11 +63,43 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             //JWTコールバックを通してトークンに追加したものをクライアントが利用できるようにしたい場合は、ここでも明示的に返す必要があります。
             return session
         },
-        signIn({ user, account, profile, email, credentials }) {
+        async signIn({ user, account, profile, email, credentials }) {
             // コールバックを使用して、signIn()ユーザーにサインインを許可するかどうかを制御します。
             // 許可する場合はtrueを返す
             // デフォルトのエラーメッセージを表示するにはfalseを、あるいはリダイレクト先を指定することもできる
+            console.log({
+                'user': user,
+                'account': account,
+                'profile': profile,
+                'email': email,
+                'credentials': credentials,
+            })
+            if (account?.provider === "credentials") return true
             return true
+            /*if (! user.email) return false
+            const existingUser = await fetchUserByEmail(user.email)
+
+            if (! existingUser?.emailVerified) return false
+            return true*/
+
+            /**
+             * {
+                user: {
+                    id: 'c6a34923-8f49-49b2-b4f3-ea6012b470e9',
+                    email: 'sasaki123.321ikasas@gmail.com',
+                    emailVerified: null
+                },
+                account: {
+                    providerAccountId: 'sasaki123.321ikasas@gmail.com',
+                    userId: 'c6a34923-8f49-49b2-b4f3-ea6012b470e9',
+                    type: 'email',
+                    provider: 'resend'
+                },
+                profile: undefined,
+                email: { verificationRequest: true },
+                credentials: undefined
+            }
+             */
         }
     },
 })

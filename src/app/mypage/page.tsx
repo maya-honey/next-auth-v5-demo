@@ -2,8 +2,7 @@ import { auth } from "@/auth"
 
 
 export default async function MyPage() {
-    const session = auth()
-    console.log(session)
+    const session = await auth()
     return (
         <div>
             <h2>Mypage</h2>
