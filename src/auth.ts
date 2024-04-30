@@ -4,6 +4,7 @@ import { PrismaClient } from "@prisma/client"
 import credentials from "next-auth/providers/credentials"
 import { fetchUserByEmail } from "./lib/data"
 import bcrypt from 'bcrypt'
+import nodemailer from "next-auth/providers/nodemailer"
 
 const prisma = new PrismaClient()
 
@@ -39,6 +40,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     throw new Error('ログイン失敗')
                 }
             },
+        }),
+        nodemailer({
+            server: process.env.EMAIL_SERVER,
+            from: process.env.EMAIL_FROM,
         })
     ],
     callbacks: {
