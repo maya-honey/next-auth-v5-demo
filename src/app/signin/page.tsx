@@ -1,9 +1,9 @@
 'use client'
 import Button from "@/components/atoms/Button/Button";
-import request from "@/lib/request";
+// import { signIn } from "@/auth"
 import { signIn } from "next-auth/react";
+// import { signIn } from "next-auth/react";
 import Head from "next/head";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export default function Signin() {
@@ -14,24 +14,6 @@ export default function Signin() {
 
     const [errors, setErrors] = useState<string[]>([])
 
-    const router = useRouter()
-
-    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        setErrors([])
-
-        try {
-            await signIn("credentials", {
-                email: input.email,
-                password: input.password,
-                callbackUrl: '/',
-            })
-        } catch (err) {
-            console.log('これや')
-            setErrors(['ログインに失敗しました'])
-            return
-        }
-    }
     return (
         <div
             style={{ height: "88vh" }}
@@ -47,7 +29,15 @@ export default function Signin() {
             </div>
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-                    <form onSubmit={onSubmit}>
+                    <form 
+                        action={async () => {
+                            await signIn("credentials", {
+                                email: input.email,
+                                password: input.password,
+                                redirectTo: '/',
+                            })
+                        }}
+                    >
                         <div className="mt-6">
                             <label
                                 htmlFor="email"

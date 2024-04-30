@@ -1,7 +1,8 @@
-import { getServerSession } from "next-auth"
+import { auth } from "@/auth"
+
 
 export default async function MyPage() {
-    const session = await getServerSession()
+    const session = auth()
     console.log(session)
     return (
         <div>
