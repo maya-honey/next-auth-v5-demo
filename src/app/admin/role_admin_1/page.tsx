@@ -1,5 +1,5 @@
 export default function Admin() {
     return (
-        <div>Admin level1</div>
+        <div>Admin role 1</div>
     )
 }
