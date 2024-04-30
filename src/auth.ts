@@ -5,6 +5,7 @@ import credentials from "next-auth/providers/credentials"
 import { fetchAdminByEmail, fetchUserByEmail } from "./lib/data"
 import bcrypt from 'bcryptjs'
 import Resend from "next-auth/providers/resend"
+import { sendVerificationRequest } from "./actions/newVerification"
 
 const prisma = new PrismaClient()
 
@@ -65,7 +66,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         Resend({
             id: 'user-resend',
             apiKey: process.env.RESEND_API_KEY,
-            from: process.env.RESEND_FROM
+            from: process.env.RESEND_FROM,
+            sendVerificationRequest({ identifier: email, url, provider, token, theme }) {
+                return sendVerificationRequest({ email, url, provider, token, theme })
+            },
         })
     ],
     callbacks: {

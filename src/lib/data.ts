@@ -49,11 +49,11 @@ export async function createAdmin(name:string, email:string, role: number, passw
     })
 }
 
-export async function fetchVerificationTokeByEmail(email: string): Promise<VerificationToken | null>
+export async function fetchVerificationTokeByToken(token: string): Promise<VerificationToken | null>
 {
     return await prisma.verificationToken.findFirst({
         where: {
-            identifier: email,
+            token: token,
         }
     })
 }
