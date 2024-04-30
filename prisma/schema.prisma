@@ -14,7 +14,7 @@ datasource db {
 }
 
 model User {
-  id            String          @id @default(cuid())
+  id            Int            @id @default(autoincrement())
   name          String?
   email         String         @unique
   emailVerified DateTime?       @map("email_verified")
@@ -34,4 +34,16 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verification_tokens")
+}
+
+model Admin {
+  id            Int            @id @default(autoincrement())
+  name          String?
+  password      String?
+  email         String         @unique
+  role          Int
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt  @map("updated_at")
+
+  @@map("admins")
 }
