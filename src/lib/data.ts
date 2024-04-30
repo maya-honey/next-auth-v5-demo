@@ -1,4 +1,4 @@
-import { PrismaClient, User, VerificationToken } from "@prisma/client"
+import { PrismaClient, User, Admin, VerificationToken } from "@prisma/client"
 
 const prisma = new PrismaClient()
 
@@ -17,12 +17,33 @@ export async function fetchUserByEmail(email:string): Promise<User | null>{
     return user
 }
 
+export async function fetchAdminByEmail(email:string): Promise<Admin | null>{
+    const user = await prisma.admin.findUnique({
+        where: {
+            email: email
+        }
+    })
+    return user
+}
+
 export async function createUser(name:string, email:string, password:string): Promise<User>
 {
     return await prisma.user.create({
         data: {
             name: name,
             email: email,
+            password: password
+        }
+    })
+}
+
+export async function createAdmin(name:string, email:string, role: number, password:string): Promise<User>
+{
+    return await prisma.admin.create({
+        data: {
+            name: name,
+            email: email,
+            role: role,
             password: password
         }
     })
