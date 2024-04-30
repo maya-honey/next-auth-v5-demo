@@ -42,11 +42,11 @@ export default function AdminSignup() {
             className="flex flex-col justify-center sm:px-6 lg:px-8"
         >
             <Head>
-                <title>新規作成</title>
+                <title>管理者アカウントを作成</title>
             </Head>
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <h2 className="text-center text-3xl font-extrabold text-gray-900">
-                    アカウントを作成
+                    管理者アカウントを作成
                 </h2>
             </div>
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
