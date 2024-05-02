@@ -18,17 +18,6 @@ export default function Signup() {
 
     const router = useRouter()
 
-    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-
-        const res = await request.post('/api/signup', {...input})
-        if (!res.data.user || res.data.error) {
-            setErrors([res.data.error] || ['ユーザー登録に失敗しました'])
-            return
-        } 
-
-        router.push("/signin")
-    }
     return (
         <div
             style={{ height: "88vh" }}
@@ -44,67 +33,6 @@ export default function Signup() {
             </div>
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-                    <form onSubmit={onSubmit}>
-                        <div>
-                            <label
-                                htmlFor="email"
-                                className="block text-sm font-medium text-gray-700"
-                            >
-                                お名前
-                            </label>
-                            <input
-                                id="name"
-                                name="name"
-                                type="text"
-                                autoComplete="name"
-                                required
-                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setInput({...input, name: e.target.value})}}
-                            />
-                        </div>
-                        <div className="mt-6">
-                            <label
-                                htmlFor="email"
-                                className="block text-sm font-medium text-gray-700"
-                            >
-                                メールアドレス
-                            </label>
-                            <input
-                                id="email"
-                                name="email"
-                                type="email"
-                                autoComplete="email"
-                                required
-                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setInput({...input, email: e.target.value})}}
-                            />
-                        </div>
-                        <div className="mt-6">
-                            <label
-                                htmlFor="password"
-                                className="block text-sm font-medium text-gray-700"
-                            >
-                                パスワード
-                            </label>
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                autoComplete="new-password"
-                                required
-                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setInput({...input, password: e.target.value})}}
-                            />
-                        </div>
-                        <div className="mt-6">
-                            <Button
-                                type="submit"
-                                className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                                新規登録
-                            </Button>
-                        </div>
-                    </form>
                     <div>
                         <div className="mt-6">
                             <label
